@@ -502,3 +502,17 @@ with col_panel:
             )
 
             st.altair_chart(psi_chart, width="stretch")
+
+st.markdown(
+    """
+**Data Sources & Credits**
+<div style="font-size: 12px; font-weight: 300; margin-bottom: 8px;">
+• <b>WBGT</b>: National Environment Agency. (2025). <i>Wet Bulb Globe Temperature (WBGT) Observations (2025)</i> [Dataset]. data.gov.sg. Retrieved September 15, 2026 from https://data.gov.sg/datasets/d_87884af1f85d702d4f74c6af13b4853d/view<br>
+• <b>PSI and PM2.5</b>: National Environment Agency. (2024). <i>Pollutant Standards Index (PSI) (2026)</i> [Dataset]. data.gov.sg. Retrieved September 15, 2026 from https://data.gov.sg/datasets/d_fe37906a0182569d891506e815e819b7/view<br>
+• <b>Zika Clusters</b>: National Environment Agency. (2019). <i>Zika Cluster (GEOJSON) (2024)</i> [Dataset]. data.gov.sg. Retrieved September 15, 2026 from https://data.gov.sg/datasets/d_a3c783f11d79ff7feb8856f762ccf2c5/view<br>
+• <b>Road Accidents</b>: Land Transport Authority. (2026). Title of Dataset [Data set]. LTA DataMall. Retrieved September 17, 2026, from https://datamall.lta.gov.sg/content/datamall/en.html<br>
+• <b>Dengue Clusters</b>: National Environment Agency. (2020). Dengue Clusters (GEOJSON) (2026) [Dataset]. data.gov.sg. Retrieved September 17, 2026 from https://data.gov.sg/datasets/d_dbfabf16158d1b0e1c420627c0819168/view
+</div>
+""",
+    unsafe_allow_html=True,
+)
