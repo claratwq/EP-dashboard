@@ -32,13 +32,12 @@ with ThreadPoolExecutor() as executor:
     future_wbgt = executor.submit(get_wbgt_data)
     future_incidents = executor.submit(get_traffic_incidents)
     future_dengue = executor.submit(get_dengue_geojson)
-    future_zika = executor.submit(get_zika_geojson)
 
     df_env = future_env.result()
     wbgt_data = future_wbgt.result()
     df_incidents = future_incidents.result()
     geojson_dengue = future_dengue.result()
-    geojson_zika = future_zika.result()
+
 
 wbgt_dict = wbgt_data.get("readings", {})
 df_accidents = (
@@ -126,6 +125,8 @@ if geojson_dengue and isinstance(geojson_dengue, dict) and "features" in geojson
         )
     ).add_to(dengue_group)
     dengue_group.add_to(m)
+    
+geojson_zika = get_zika_geojson()
 
 if geojson_zika and isinstance(geojson_zika, dict) and "features" in geojson_zika:
     zika_group = folium.FeatureGroup(name="🟣 Zika Clusters", show=True)
