@@ -1,7 +1,8 @@
-pandas
-streamlit
-folium
 altair
-streamlit-folium
-requests
+beautifulsoup4
+folium
+pandas
 python-dotenv
+requests
+streamlit
+streamlit-folium
