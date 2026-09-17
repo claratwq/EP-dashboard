@@ -404,27 +404,101 @@ with col_panel:
                 .sort_values(by="timestamp")
                 .reset_index(drop=True)
             )
-            st.markdown('1h PM2.5 Trend')
+            st.markdown(
+                            '<div style="font-size: 14px; font-weight: 600; margin-bottom: 8px;">1-Hour PM2.5 Trend</div>',
+                            unsafe_allow_html=True,
+                        )
             pm25_chart = (
                 alt.Chart(df_chart)
                 .mark_line()
                 .encode(
-                    x=alt.X("timestamp:T", title="Date & Time"),
-                    y=alt.Y("pm25_1h:Q", title="1h PM2.5 (µg/m³)"),
-                    color=alt.Color("region:N", legend=None),
+                    x=alt.X(
+                        "timestamp:T",
+                        title="Date & Time",
+                        axis=alt.Axis(
+                            format="%b %d %H:%M",
+                            labelAngle=-45,
+                            labelFontSize=11,
+                            titleFontSize=12,
+                        ),
+                    ),
+                    y=alt.Y(
+                        "pm25_1h:Q",
+                        title="1h PM2.5 (µg/m³)",
+                        scale=alt.Scale(zero=False),
+                        axis=alt.Axis(
+                            labelFontSize=11,
+                            titleFontSize=12,
+                        ),
+                    ),
+                    color=alt.Color(
+                        "region:N",
+                        legend=None,  # Hides legend for this chart
+                    ),
+                    tooltip=[
+                        alt.Tooltip(
+                            "timestamp:T", title="Date/Time", format="%b %d %H:%M"
+                        ),
+                        "region:N",
+                        "pm25_1h:Q",
+                    ],
                 )
-                .properties(height=250)
+                .properties(height=300)
             )
             st.altair_chart(pm25_chart, width="stretch")
-            st.markdown('24h Average PSI Trend')
+            # ---------------------------------------------------------
+            # Chart 2: 24-Hour Average PSI Trend
+            # ---------------------------------------------------------
+            st.markdown(
+                '<div style="font-size: 14px; font-weight: 600; margin-bottom: 8px;">24-Hour Average PSI Trend</div>',
+                unsafe_allow_html=True,
+            )
+
+            # Ensure chronological sorting across full dates to avoid line distortion
+            df_chart = df_chart.sort_values(by="timestamp").reset_index(drop=True)
+
             psi_chart = (
                 alt.Chart(df_chart)
                 .mark_line()
                 .encode(
-                    x=alt.X("timestamp:T", title="Date & Time"),
-                    y=alt.Y("psi_24h:Q", title="24h PSI Index"),
-                    color=alt.Color("region:N", legend=alt.Legend(orient="bottom")),
+                    x=alt.X(
+                        "timestamp:T",
+                        title="Date & Time",
+                        axis=alt.Axis(
+                            format="%b %d %H:%M",
+                            labelAngle=-45,
+                            labelFontSize=11,
+                            titleFontSize=12,
+                        ),
+                    ),
+                    y=alt.Y(
+                        "psi_24h:Q",
+                        title="24h PSI Index",
+                        scale=alt.Scale(zero=False),
+                        axis=alt.Axis(
+                            labelFontSize=11,
+                            titleFontSize=12,
+                        ),
+                    ),
+                    color=alt.Color(
+                        "region:N",
+                        title="Region",
+                        legend=alt.Legend(
+                            orient="bottom",
+                            title="Region",
+                            titleFontSize=12,
+                            labelFontSize=11,
+                        ),
+                    ),
+                    tooltip=[
+                        alt.Tooltip(
+                            "timestamp:T", title="Date/Time", format="%b %d %H:%M"
+                        ),
+                        "region:N",
+                        "psi_24h:Q",
+                    ],
                 )
-                .properties(height=250)
+                .properties(height=400)
             )
+
             st.altair_chart(psi_chart, width="stretch")
